@@ -1,0 +1,635 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #f3f6f4;
+  background: #07130e;
+  font-synthesis: none;
+
+  /*
+   * Osnovna skala aplikacije.
+   * clamp omogućava da elementi rastu na većim ekranima,
+   * ali ne postanu premali na 960x540 niti ogromni na 4K.
+   */
+  --space-xs: clamp(6px, 0.5vw, 12px);
+  --space-sm: clamp(10px, 0.8vw, 18px);
+  --space-md: clamp(16px, 1.2vw, 28px);
+  --space-lg: clamp(24px, 2vw, 45px);
+  --space-xl: clamp(32px, 3vw, 65px);
+
+  --radius: clamp(8px, 0.7vw, 18px);
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  background: #07130e;
+
+  overflow: hidden;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+}
+
+/* =========================================================
+   MAIN SCREEN
+   ========================================================= */
+
+.screen {
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+
+  padding:
+    clamp(18px, 3.5vh, 55px)
+    clamp(24px, 5vw, 100px)
+    clamp(14px, 2vh, 30px);
+
+  display: flex;
+  flex-direction: row;
+
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(36, 91, 65, 0.45),
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      #07130e 0%,
+      #0b1f16 50%,
+      #07130e 100%
+    );
+}
+
+.centered {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loader {
+  width: clamp(38px, 4vw, 72px);
+  height: clamp(38px, 4vw, 72px);
+
+  border:
+    clamp(3px, 0.35vw, 6px)
+    solid rgba(255, 255, 255, 0.15);
+
+  border-top-color: #fff;
+  border-radius: 50%;
+
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  margin-top: var(--space-md);
+  font-size: clamp(18px, 1.8vw, 32px);
+}
+
+.error-icon {
+  width: clamp(55px, 5vw, 90px);
+  height: clamp(55px, 5vw, 90px);
+
+  border: clamp(2px, 0.2vw, 4px) solid #f3c969;
+  border-radius: 50%;
+
+  display: grid;
+  place-items: center;
+
+  font-size: clamp(30px, 3vw, 55px);
+}
+
+/* =========================================================
+   CONTENT LAYOUT
+   ========================================================= */
+
+.content {
+  position: relative;
+  z-index: 2;
+
+  width: min(62%, 1200px);
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  /*
+   * Ovo sprečava da sadržaj bude zalijepljen za ivicu
+   * na vrlo malim ekranima.
+   */
+  min-width: 0;
+}
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: var(--space-lg);
+}
+
+.brand-area {
+  display: flex;
+  align-items: center;
+
+  gap: clamp(10px, 1vw, 22px);
+
+  min-width: 0;
+}
+
+.iz-logo {
+  width: clamp(42px, 4vw, 90px);
+  height: clamp(42px, 4vw, 90px);
+
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand {
+  font-size: clamp(22px, 3vw, 48px);
+
+  font-weight: 800;
+  letter-spacing: 0.12em;
+
+  white-space: nowrap;
+}
+
+.location {
+  margin-top: 3px;
+
+  font-size: clamp(13px, 1.5vw, 25px);
+
+  opacity: 0.7;
+}
+
+.connection {
+  display: flex;
+  align-items: center;
+
+  gap: clamp(5px, 0.5vw, 10px);
+
+  font-size: clamp(11px, 1.1vw, 18px);
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.connection-dot {
+  width: clamp(8px, 0.65vw, 14px);
+  height: clamp(8px, 0.65vw, 14px);
+
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.connection.online {
+  color: #8ed7a9;
+}
+
+.connection.offline {
+  color: #f3c969;
+}
+
+/* =========================================================
+   DATE / CLOCK
+   ========================================================= */
+
+.date-section {
+  width: 100%;
+
+  text-align: center;
+
+  margin:
+    clamp(16px, 3vh, 45px)
+    0
+    clamp(8px, 1vh, 18px);
+}
+
+.date {
+  text-transform: capitalize;
+
+  font-size: clamp(22px, 3vw, 48px);
+
+  font-weight: 700;
+}
+
+.hijri-date {
+  margin-top: 4px;
+
+  font-size: clamp(15px, 1.7vw, 28px);
+
+  opacity: 0.65;
+}
+
+.clock {
+  margin-top: 5px;
+
+  font-size: clamp(20px, 2.4vw, 70px);
+
+  opacity: 0.6;
+
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   PRAYERS
+   ========================================================= */
+
+.prayers {
+  width: min(100%, 850px);
+
+  margin:
+    clamp(8px, 1.5vh, 25px)
+    auto
+    clamp(10px, 2vh, 30px);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: clamp(7px, 1vh, 100px);
+}
+
+.prayer {
+  width: 100%;
+
+  min-height: clamp(48px, 6vh, 92px);
+
+  padding:
+    clamp(10px, 1.2vw, 25px)
+    clamp(14px, 1.5vw, 30px);
+
+  border:
+    clamp(1px, 0.08vw, 2px)
+    solid rgba(255, 255, 255, 0.09);
+
+  border-radius: var(--radius);
+
+  background: rgba(255, 255, 255, 0.055);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: var(--space-md);
+}
+
+.prayer.next {
+  border-color: rgba(243, 201, 105, 0.8);
+
+  background: rgba(243, 201, 105, 0.08);
+
+  box-shadow:
+    0 0 clamp(15px, 2vw, 30px)
+    rgba(243, 201, 105, 0.08);
+}
+
+.prayer-name {
+  font-size: clamp(15px, 1.7vw, 45px);
+
+  opacity: 0.75;
+
+  font-weight: bold;
+}
+
+.prayer-time {
+  font-size: clamp(22px, 3vw, 46px);
+
+  font-weight: 800;
+
+  font-variant-numeric: tabular-nums;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   NEXT PRAYER
+   ========================================================= */
+
+.next-section {
+  width: 100%;
+
+  margin:
+    clamp(8px, 1vh, 18px)
+    0
+    clamp(10px, 2vh, 30px);
+
+  text-align: center;
+}
+
+.next-label {
+  font-size: clamp(18px, 2.2vw, 38px);
+
+  letter-spacing: 0.18em;
+
+  opacity: 0.55;
+}
+
+.next-prayer {
+  margin-top: 5px;
+
+  font-size: clamp(20px, 2.5vw, 52px);
+
+  font-weight: 700;
+}
+
+.next-prayer span {
+  margin-left: clamp(6px, 0.7vw, 14px);
+
+  opacity: 0.7;
+}
+
+.countdown {
+  margin-top: 4px;
+
+  font-size: clamp(15px, 1.7vw, 30px);
+
+  opacity: 0.6;
+
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+  margin-top: auto;
+
+  text-align: center;
+
+  opacity: 0.4;
+
+  font-size: clamp(11px, 0.8vw, 15px);
+}
+
+.muted {
+  opacity: 0.55;
+}
+
+.empty {
+  width: 100%;
+
+  padding: clamp(25px, 4vw, 60px);
+
+  text-align: center;
+
+  opacity: 0.6;
+}
+
+/* =========================================================
+   RIGHT SIDE IMAGE
+   ========================================================= */
+
+.vaktija-image {
+  position: fixed;
+
+  z-index: 1;
+
+  top: 0;
+  right: 0;
+
+  width: 48%;
+  height: 100%;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transition:
+    background-image 1.5s ease-in-out,
+    opacity 1.5s ease-in-out;
+
+  opacity: 0.9;
+}
+
+.vaktija-image::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    to right,
+    #07130e 0%,
+    rgba(7, 19, 14, 0.92) 8%,
+    rgba(7, 19, 14, 0.55) 22%,
+    rgba(7, 19, 14, 0.15) 42%,
+    transparent 65%
+  );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   HADITH
+   ========================================================= */
+
+.hadith {
+  position: absolute;
+
+  left: 8%;
+  right: 8%;
+  bottom: clamp(20px, 5vh, 80px);
+
+  z-index: 3;
+
+  text-align: center;
+
+  padding:
+    clamp(12px, 1.5vw, 28px)
+    clamp(15px, 2vw, 36px);
+
+  background: rgba(7, 19, 14, 0.62);
+
+  border:
+    clamp(1px, 0.08vw, 2px)
+    solid rgba(255, 255, 255, 0.10);
+
+  border-radius: clamp(10px, 1vw, 20px);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  box-shadow:
+    0 clamp(5px, 0.8vw, 15px)
+    clamp(20px, 2.5vw, 45px)
+    rgba(0, 0, 0, 0.25);
+}
+
+.hadith-title {
+  margin-bottom: clamp(6px, 0.7vh, 12px);
+
+  font-size: clamp(9px, 0.8vw, 16px);
+
+  font-weight: 700;
+
+  letter-spacing: 0.25em;
+
+  opacity: 0.65;
+}
+
+.hadith-text {
+  font-size: clamp(14px, 1.5vw, 26px);
+
+  line-height: 1.5;
+
+  font-weight: 500;
+}
+
+.hadith-source {
+  margin-top: clamp(6px, 0.7vh, 12px);
+
+  font-size: clamp(11px, 1.1vw, 18px);
+
+  font-style: italic;
+
+  opacity: 0.65;
+}
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   VERY SMALL / LOW RESOLUTION TV
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .screen {
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
+
+  .content {
+    width: 63%;
+  }
+
+  .vaktija-image {
+    width: 39%;
+  }
+
+  .prayers {
+    gap: 6px;
+  }
+
+  .prayer {
+    min-height: 45px;
+  }
+}
+
+/* =========================================================
+   PORTRAIT / NARROW SCREENS
+   ========================================================= */
+
+@media (max-aspect-ratio: 4 / 3) {
+  .screen {
+    flex-direction: column;
+
+    overflow-y: auto;
+  }
+
+  .content {
+    width: 100%;
+    height: auto;
+  }
+
+  .vaktija-image {
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0.25;
+  }
+
+  .vaktija-image::before {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(7, 19, 14, 0.75),
+        rgba(7, 19, 14, 0.9)
+      );
+  }
+
+  .hadith {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    bottom: auto;
+
+    margin-top: 20px;
+  }
+}
+
+/* =========================================================
+   SHORT SCREENS
+   ========================================================= */
+
+@media (max-height: 650px) {
+  .screen {
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+  }
+
+  .date-section {
+    margin-top: 1.5vh;
+    margin-bottom: 0.5vh;
+  }
+
+  .prayers {
+    gap: 5px;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+
+  .prayer {
+    min-height: clamp(40px, 7vh, 65px);
+
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .next-section {
+    margin-top: 0.5vh;
+    margin-bottom: 1vh;
+  }
+
+  .hadith {
+    bottom: 2vh;
+  }
+}
+
